@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Isaiah Burke Jones | e-Portfolio</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+	<!-- Navigation Header -->
+	<header class="site-header">
+		<div class="container nav-container">
+			<a href="#hero" class="logo">IBJ<span>.dev</span></a>
+			<nav class="main-nav">
+				<ul>
+					<li><a href="#about">About</a></li>
+					<li><a href="#homelab">Homelab</a></li>
+					<li><a href="#cnt3004">CNT 3004</a></li>
+					<li><a href="#goals">Goals & Certs</a></li>
+					<li><a href="#resume">Resume</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<!-- Profile Section -->
+	<section id="hero" class="hero-section">
+		<div class="container hero-grid">
+			<div class="hero-image-wrapper">
+				<!-- Replace 'profile.jpg' with headshot file in the root directory later-->
+				<img src="profile.jpg" alt="Isaiah Burke Jones - Professional Headshot" class="profile-img">
+			</div>
+			<div class="hero-text">
+				<span class="badge">UCF Information Technology</span>
+				<h1>Isaiah Burke Jones</h1>
+				<p class="subtitle">Undergraduate Student | Systems Administration & Network Infrastructure</p>
+				<p class="bio-lead">
+					Passionate about enterprise networking, virtualized infrastructure, Linux systems administration, and self-hosted cloud security.
+				</p>
+				<div class="hero-cta">
+					<a href="#homelab" class="btn btn-primary">View Homelab Architecture</a>
+					<a href="#resume" class="btn btn-secondary">Qualifications</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- About Section -->
+	<section id="about" class="section">
+		<div class="container">
+			<h2 class="section-title">Biography & Academic Profile</h2>
+			<div class="card grid-2">
+				<div>
+					<h3>Academic Background</h3>
+					<p>
+						I am an Information Technology undergraduate student at the University of Central Florida (UCF). My coursework focuses on computer network concepts, enterprise systems architecture, database management, and information security principles.
+					</p>
+				</div>
+				<div>
+					<h3>Professional Focus</h3>
+					<p>
+						My primary technical interests lie in network engineering, Linux administration, hypervisor deployment, and perimeter security. I specialize in designing isolated network topologies, stateful firewall configurations, and secure virtualized environments.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Homelab Architecture Section -->
+	<section id="homelab" class="section bg-alt">
+		<div class="container">
+			<h2 class="section-title">Rack Infrastructure & Homelab Architecture</h2>
+			<p class="section-desc">
+				A custom 20U rack deployment designed for testing enterprise network isolation, stateful firewall routing, zero-trust overlay networks, and hypervisor storage mapping.
+			</p>
+
+			<div class="grid-3">
+				<!-- Node 1: OPNsense -->
+				<div class="card border-top">
+					<div class="card-tag">Perimeter Security</div>
+					<h3>OPNsense Firewall</h3>
+					<p class="card-sub">Dell OptiPlex 7070 SFF | I5-9500 | Intel I226-V 2.5G Dual NIC</p>
+					<ul>
+						<li><strong>Routing Engine:</strong> Stateful Default Deny rules with Kea DHCP active on isolated <code class="inline-code">192.168.1.0/24</code> subnet.</li>
+						<li><strong>WAN Configuration:</strong> Configured for private RFC 1918 upstream feeds with Bogon filtering enabled.</li>
+						<li><strong>Switching:</strong> Uplinked via 2.5G managed switch with Wi-Fi 7 AP operating in isolated Access Point Mode.</li>
+					</ul>
+				</div>
+
+				<!-- Node 2: Proxmox VE -->
+				<div class="card border-top">
+					<div class="card-tag">Virtualization</div>
+					<h3>Proxmox VE Hypervisor Host</h3>
+					<p class="card-sub">Dell Precision 3630 | i5-8500 | 32GB RAM | 2x 4TB ZFS Pool</p>
+					<ul>
+						<li><strong>Hypervisor:</strong> Proxmox VE 9.x main compute host backed by mirrored ZFS storage for high-integrity container mounts.</li>
+						<li><strong>Management:</strong> Dual-interface management access via local LAN and Tailscale mesh interface.</li>
+						<li><strong>Host Security:</strong> Hierarchical datacenter firewall whitelist dropping unauthenticated management traffic.</li>
+					</ul>
+				</div>
+
+				<!-- Node 3: Zero-Trust File Server -->
+				<div class="card border-top">
+					<div class="card-tag">Storage & Isolation</div>
+					<h3>Zero-Trust Samba LXC Share</h3>
+					<p class="card-sub">Debian LXC Container | Tailscale Virtual Interface</p>
+					<ul>
+						<li><strong>Encrypted Transport:</strong> Samba file service bound strictly to loopback and point-to-point Tailscale mesh interfaces.</li>
+						<li><strong>Access Control:</strong> Application-layer <code class="inline-code">hosts allow</code> filtering blocking all local LAN broadcast access.</li>
+						<li><strong>Storage Mapping:</strong> Direct ZFS storage dataset passthrough to unprivileged container.</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Network Topology Summary Table -->
+			<div class="card margin-top">
+				<h3>Network Addressing & Infrastructure Topology</h3>
+				<div class="table-wrapper">
+					<table>
+						<thead>
+							<tr>
+								<th>Device / Host</th>
+								<th>Hardware / Specs</th>
+								<th>Role</th>
+								<th>Subnet / Addressing</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><strong>24-Port Patch Panel</strong></td>
+								<td>Cat 6A Network Patch Panel with 24 10Gbps Keystone Couplers</td>
+								<td>Network Organizational Management</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td><strong>Edge Firewall</strong></td>
+								<td>Dell OptiPlex 7070 SFF (16GB RAM, Dual 2.5G NIC)</td>
+								<td>Perimeter Router / Kea DHCP</td>
+								<td><code class="inline-code">192.168.1.1</code></td>
+							</tr>
+							<tr>
+								<td><strong>Core Switch</strong></td>
+								<td>Omada ES206X-M2 5-Port 2.5G Managed Switch</td>
+								<td>Multi-Gig Layer 2 Switching</td>
+								<td><code class="inline-code">192.168.1.0/24</code></td>
+							</tr>
+							<tr>
+								<td><strong>Router</strong></td>
+								<td>TP-Link BE5000 Wifi-7 Archer BE260 Router</td>
+								<td>Wi-Fi Access Point</td>
+								<td><code class="inline-code">192.168.1.2</code></td>
+							</tr>
+							
+							<tr>
+								<td><strong>Proxmox Host</strong></td>
+								<td>Dell Precision 3630 Tower (32GB DDR4, ZFS Mirror)</td>
+								<td>Virtualization Host Node</td>
+								<td><code class="inline-code">100.x.x.x</code> (Tailscale Only)</td>
+							</tr>
+							<tr>
+								<td><strong>Samba File Share</strong></td>
+								<td>Debian LXC Container (Unprivileged)</td>
+								<td>Zero-Trust Storage Container</td>
+								<td><code class="inline-code">100.x.x.x</code> (Tailscale Only)</td>
+							</tr>
+							<tr>
+								<td><strong>UPS Battery / Surge Protector</strong></td>
+								<td>Eaton Tripp Lite SMART1500LCD 1500VA UPS 900W Battery Backup</td>
+								<td>Emergency Battery and Surge Protector</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- CNT 3004 Course Section -->
+	<section id="cnt3004" class="section">
+		<div class="container">
+			<h2 class="section-title">CNT 3004 - Computer Network Concepts</h2>
+			<p class="section-desc">Course reflections, lab exercises, and practical networking key concepts.</p>
+
+			<div class="card">
+				<h3>Course Reflections & Core Takeaways</h3>
+				<p>
+					CNT 3004 provides a comprehensive framework for understanding modern data communications, the OSI and TCP/IP reference models, subnetting, network packet flow, and security protocols.
+				</p>
+
+				<div class="reflection-box">
+					<h4>Course Reflections Placeholder</h4>
+					<p>
+						<em>As assignments and Wireshark packet captures are completed throughout the semester, reflections detailing key skills, challenges faced, and overall takeaways will be published here.</em>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Goals & Certifications Section -->
+	<section id="goals" class="section bg-alt">
+		<div class="container">
+			<h2 class="section-title">Professional Goals & Certifications</h2>
+			<div class="grid-2">
+				<div class="card">
+					<h3>Career Objectives</h3>
+					<p>
+						Following graduation from UCF with my B.S. in Information Technology, my goal is to start a career in Systems Administration or Network Engineering. I aim to focus on enterprise network design, Linux infrastructure management, and operational administration.
+					</p>
+				</div>
+				<div class="card">
+					<h3>Certification Roadmap</h3>
+					<ul class="cert-list">
+						<li><strong>CompTIA Network+</strong> - In Progress</li>
+						<li><strong>CompTIA Security+</strong> - Preparing</li>
+						<li><strong>CompTIA Linux+</strong> - Preparing</li>
+						<li><strong>CCNA</strong> - Preparing</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Resume Section -->
+	<section id="resume" class="section">
+		<div class="container">
+			<h2 class="section-title">Technical Qualifications & Resume</h2>
+			<div class="card">
+				<h3>Technical Core Competencies</h3>
+				<div class="skills-grid">
+					<div class="skill-category">
+						<h4>Networking & Security</h4>
+						<p>OPNsense, Stateful Firewalls, Kea DHCP, DNS, VLANs, Tailscale Mesh VPN, Wireshark Packet Analysis</p>
+					</div>
+					<div class="skill-category">
+						<h4>Systems & Virtualization</h4>
+						<p>Proxmox VE, Debian, Arch Linux / EndeavourOS, Windows 11, Docker, LXC Containers, ZFS Storage</p>
+					</div>
+					<div class="skill-category">
+						<h4>Hardware & Infrastructure</h4>
+						<p>20U Server Rack Assembly, Patch Panel Cable Routing, Managed 2.5G Switches, UPS Battery Backups</p>
+					</div>
+				</div>
+				<div class="resume-download-wrapper">
+					<!-- Link PDF resume file in root directory-->
+					<a href="resume.pdf" target="_blank" class="btn btn-primary">Download Official Resume (PDF)</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class="site-footer">
+		<div class="container footer-content">
+			<p>&copy; 2026 Isaiah Burke Jones. Built for CNT 3004 | Hosted on GitHub Pages.</p>
+		</div>
+	</footer>
+
+</body>
+</html>
