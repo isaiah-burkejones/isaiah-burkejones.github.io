@@ -19,6 +19,7 @@
 				<ul>
 					<li><a href="#about">About</a></li>
 					<li><a href="#homelab">Homelab</a></li>
+                    <li><a href="#incident-response">Incident Reports</a></li>
 					<li><a href="#cnt3004">CNT 3004</a></li>
 					<li><a href="#goals">Goals & Certs</a></li>
 					<li><a href="#resume">Resume</a></li>
@@ -31,7 +32,6 @@
 	<section id="hero" class="hero-section">
 		<div class="container hero-grid">
 			<div class="hero-image-wrapper">
-				<!-- Replace 'profile.jpg' with headshot file in the root directory later-->
 				<img src="profile.jpg" alt="Isaiah Burke Jones - Professional Headshot" class="profile-img">
 			</div>
 			<div class="hero-text">
@@ -39,11 +39,12 @@
 				<h1>Isaiah Burke Jones</h1>
 				<p class="subtitle">Undergraduate Student | Systems Administration & Network Infrastructure</p>
 				<p class="bio-lead">
-					Passionate about enterprise networking, virtualized infrastructure, Linux systems administration, and self-hosted cloud security.
+					Passionate about enterprise networking, virtualized infrastructure, Linux systems administration, and zero-trust perimeter security.
 				</p>
 				<div class="hero-cta">
 					<a href="#homelab" class="btn btn-primary">View Homelab Architecture</a>
-					<a href="#resume" class="btn btn-secondary">Qualifications</a>
+					<a href="#incident-response" class="btn btn-secondary">Incident Response</a>
+					<a href="#resume" class="btn btn-tertiary">Qualifications</a>
 				</div>
 			</div>
 		</div>
@@ -63,7 +64,7 @@
 				<div>
 					<h3>Professional Focus</h3>
 					<p>
-						My primary technical interests lie in network engineering, Linux administration, hypervisor deployment, and perimeter security. I specialize in designing isolated network topologies, stateful firewall configurations, and secure virtualized environments.
+						My primary technical interests lie in network engineering, Linux administration, hypervisor deployment, and incident management. I specialize in designing isolated network topologies, stateful firewall configurations, reverse proxies, and secure virtualized environments.
 					</p>
 				</div>
 			</div>
@@ -75,19 +76,19 @@
 		<div class="container">
 			<h2 class="section-title">Rack Infrastructure & Homelab Architecture</h2>
 			<p class="section-desc">
-				A custom 20U rack deployment designed for testing enterprise network isolation, stateful firewall routing, zero-trust overlay networks, and hypervisor storage mapping.
+				A custom 20U rack deployment designed for testing enterprise network isolation, stateful firewall routing, zero-trust overlay networks, and microsegmentation.
 			</p>
 
 			<div class="grid-3">
 				<!-- Node 1: OPNsense -->
 				<div class="card border-top">
-					<div class="card-tag">Perimeter Security</div>
-					<h3>OPNsense Firewall</h3>
-					<p class="card-sub">Dell OptiPlex 7070 SFF | I5-9500 | Intel I226-V 2.5G Dual NIC</p>
+					<div class="card-tag">Perimeter Security & DNS</div>
+					<h3>OPNsense Edge Firewall</h3>
+					<p class="card-sub">Dell OptiPlex 7070 SFF | I5-9500 | Dual 2.5G NIC</p>
 					<ul>
-						<li><strong>Routing Engine:</strong> Stateful Default Deny rules with Kea DHCP active on isolated <code class="inline-code">192.168.1.0/24</code> subnet.</li>
-						<li><strong>WAN Configuration:</strong> Configured for private RFC 1918 upstream feeds with Bogon filtering enabled.</li>
-						<li><strong>Switching:</strong> Uplinked via 2.5G managed switch with Wi-Fi 7 AP operating in isolated Access Point Mode.</li>
+						<li><strong>Routing & DHCP:</strong> Kea DHCP engine active on isolated <code class="inline-code">192.168.137.0/24</code> subnet with Hairpin NAT.</li>
+						<li><strong>Intrusion Detection:</strong> Suricata IDS utilizing the Hyperscan pattern matcher across LAN and Tailscale interfaces to inspect and drop packets.</li>
+						<li><strong>DNS Hardening:</strong> Unbound DNS integrated with AdGuard blocklists, dropping outbound DoT/DoQ, and forcing port 53 redirects.</li>
 					</ul>
 				</div>
 
@@ -95,15 +96,38 @@
 				<div class="card border-top">
 					<div class="card-tag">Virtualization</div>
 					<h3>Proxmox VE Hypervisor Host</h3>
-					<p class="card-sub">Dell Precision 3630 | i5-8500 | 32GB RAM | 2x 4TB ZFS Pool</p>
+					<p class="card-sub">Dell Precision 3630 | i5-8500 | 32GB RAM | ZFS Mirror</p>
 					<ul>
 						<li><strong>Hypervisor:</strong> Proxmox VE 9.x main compute host backed by mirrored ZFS storage for high-integrity container mounts.</li>
-						<li><strong>Management:</strong> Dual-interface management access via local LAN and Tailscale mesh interface.</li>
 						<li><strong>Host Security:</strong> Hierarchical datacenter firewall whitelist dropping unauthenticated management traffic.</li>
+						<li><strong>Virtual Networking:</strong> Linux bridge topology isolating internal LXC container communications from management traffic.</li>
 					</ul>
 				</div>
 
-				<!-- Node 3: Zero-Trust File Server -->
+				<!-- Node 3: Vaultwarden & Caddy -->
+				<div class="card border-top">
+					<div class="card-tag">Identity & Proxy Services</div>
+					<h3>Vaultwarden & Caddy Proxy</h3>
+					<p class="card-sub">Debian LXCs | Cloudflare DNS-01 | Let's Encrypt</p>
+					<ul>
+						<li><strong>Reverse Proxy:</strong> Caddy routes authorized Tailscale traffic to the Vaultwarden backend via Unbound DNS Overrides.</li>
+						<li><strong>Microsegmentation:</strong> Strict Proxmox firewall rules isolate Vaultwarden (Port 8080) exclusively to Caddy's IP.</li>
+						<li><strong>TLS Termination:</strong> Automated certificate provisioning via Cloudflare API, bypassing public port exposure.</li>
+					</ul>
+				</div>
+
+				<!-- Node 4: Tailscale -->
+				<div class="card border-top">
+					<div class="card-tag">Zero-Trust Network Access</div>
+					<h3>Tailscale Meshnet & TSLock</h3>
+					<p class="card-sub">Exit Node Routing | Tailnet Lock</p>
+					<ul>
+						<li><strong>Mesh VPN:</strong> OPNsense configured as a subnet router and exit node, forcing remote queries through local Unbound DNS.</li>
+						<li><strong>Cryptographic Auth:</strong> Tailnet Lock deployed via offline <code class="inline-code">tslock-lxc</code> and Samba nodes to prevent lateral movement from Tailscale home servers.</li>
+					</ul>
+				</div>
+
+				<!-- Node 5: Samba -->
 				<div class="card border-top">
 					<div class="card-tag">Storage & Isolation</div>
 					<h3>Zero-Trust Samba LXC Share</h3>
@@ -111,7 +135,17 @@
 					<ul>
 						<li><strong>Encrypted Transport:</strong> Samba file service bound strictly to loopback and point-to-point Tailscale mesh interfaces.</li>
 						<li><strong>Access Control:</strong> Application-layer <code class="inline-code">hosts allow</code> filtering blocking all local LAN broadcast access.</li>
-						<li><strong>Storage Mapping:</strong> Direct ZFS storage dataset passthrough to unprivileged container.</li>
+					</ul>
+				</div>
+
+				<!-- Node 6: Rack Infrastructure -->
+				<div class="card border-top">
+					<div class="card-tag">Enterprise Rack Infrastructure</div>
+					<h3>20U Rack Deployment</h3>
+					<p class="card-sub">24-Port Patch Panel | 900W Battery Backup </p>
+					<ul>
+						<li><strong>24-Port Patch Panel:</strong> Equipped with 24 10Gbps keystone couplers for enterprise-level network topology requirements.</li>
+						<li><strong>UPS Battery Backup:</strong> 1500VA 900W UPS battery backup and surge protector for unexpected power outages.</li>
 					</ul>
 				</div>
 			</div>
@@ -131,47 +165,52 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td><strong>24-Port Patch Panel</strong></td>
-								<td>Cat 6A Network Patch Panel with 24 10Gbps Keystone Couplers</td>
-								<td>Network Organizational Management</td>
-								<td></td>
-							</tr>
-							<tr>
 								<td><strong>Edge Firewall</strong></td>
 								<td>Dell OptiPlex 7070 SFF (16GB RAM, Dual 2.5G NIC)</td>
-								<td>Perimeter Router / Kea DHCP</td>
-								<td><code class="inline-code">192.168.1.1</code></td>
+								<td>Perimeter Router / Kea DHCP / IDS</td>
+								<td><code class="inline-code">192.168.137.1</code></td>
 							</tr>
 							<tr>
 								<td><strong>Core Switch</strong></td>
 								<td>Omada ES206X-M2 5-Port 2.5G Managed Switch</td>
 								<td>Multi-Gig Layer 2 Switching</td>
-								<td><code class="inline-code">192.168.1.0/24</code></td>
+								<td><code class="inline-code">192.168.137.0/24</code></td>
 							</tr>
 							<tr>
-								<td><strong>Router</strong></td>
-								<td>TP-Link BE5000 Wifi-7 Archer BE260 Router</td>
-								<td>Wi-Fi Access Point</td>
-								<td><code class="inline-code">192.168.1.2</code></td>
+								<td><strong>Wireless Access Point</strong></td>
+								<td>TP-Link BE5000 Wi-Fi 7 Archer BE260</td>
+								<td>Isolated AP Mode</td>
+								<td><code class="inline-code">DHCP Assigned</code></td>
 							</tr>
-							
 							<tr>
 								<td><strong>Proxmox Host</strong></td>
 								<td>Dell Precision 3630 Tower (32GB DDR4, ZFS Mirror)</td>
 								<td>Virtualization Host Node</td>
-								<td><code class="inline-code">100.x.x.x</code> (Tailscale Only)</td>
+								<td><code class="inline-code">192.168.137.100:8006</code></td>
+							</tr>
+							<tr>
+								<td><strong>Vaultwarden Server</strong></td>
+								<td>Debian LXC Container</td>
+								<td>Identity & Credential Management</td>
+								<td><code class="inline-code">192.168.137.101:8080</code></td>
 							</tr>
 							<tr>
 								<td><strong>Samba File Share</strong></td>
-								<td>Debian LXC Container (Unprivileged)</td>
-								<td>Zero-Trust Storage Container</td>
-								<td><code class="inline-code">100.x.x.x</code> (Tailscale Only)</td>
+								<td>Debian LXC Container</td>
+								<td>Zero-Trust Storage & TSLock Node</td>
+								<td><code class="inline-code">192.168.137.102</code></td>
 							</tr>
 							<tr>
-								<td><strong>UPS Battery / Surge Protector</strong></td>
-								<td>Eaton Tripp Lite SMART1500LCD 1500VA UPS 900W Battery Backup</td>
-								<td>Emergency Battery and Surge Protector</td>
-								<td></td>
+								<td><strong>Caddy Reverse Proxy</strong></td>
+								<td>Debian LXC Container</td>
+								<td>TLS Termination & HTTP Routing</td>
+								<td><code class="inline-code">192.168.137.103</code></td>
+							</tr>
+							<tr>
+								<td><strong>TSLock Node</strong></td>
+								<td>Debian LXC Container (Offline by Default)</td>
+								<td>Tailnet Mesh Authentication Lock</td>
+								<td><code class="inline-code">192.168.137.104</code></td>
 							</tr>
 						</tbody>
 					</table>
@@ -180,8 +219,38 @@
 		</div>
 	</section>
 
+	<!-- Incident Management Section -->
+	<section id="incident-response" class="section">
+		<div class="container">
+			<h2 class="section-title">Incident Management & Troubleshooting</h2>
+			<p class="section-desc">Documented case studies demonstrating network recovery, root cause analysis, and service migration handling.</p>
+
+			<div class="incident-card">
+				<div class="incident-header">
+					<span class="incident-date">October 2026</span>
+					<h3>Case Study: Subnet Migration & Routing Recovery</h3>
+					<span class="incident-status resolved">Status: Resolved</span>
+				</div>
+				<div class="incident-body">
+					<h4>Scenario</h4>
+					<p>A planned migration of the local LAN from <code class="inline-code">192.168.1.0/24</code> to <code class="inline-code">192.168.137.0/24</code> resulted in a cascade of DNS resolution failures, asymmetric routing drops, and severed management access to the OPNsense Web GUI.</p>
+
+					<h4>Root Cause Analysis</h4>
+					<ul>
+						<li><strong>DNS Access Control:</strong> Unbound DNS strictly dropped requests from the new unrecognized subnet because ACLs were not automatically reloaded.</li>
+						<li><strong>State Tables:</strong> Outbound NAT rules failed to automatically regenerate for the newly established logical network boundaries.</li>
+						<li><strong>DHCP Lease Conflicts:</strong> Downstream Wi-Fi 7 APs and switching hardware maintained stale gateway IP leases, triggering DHCP resolution failures.</li>
+					</ul>
+
+					<h4>Resolution & Hardening</h4>
+					<p>Used the OPNsense CLI to execute a configuration rollback, restoring management access. Manually flushed DNS ACLs and rebuilt Outbound NAT tables via the root shell. To prevent future gateway drops during reboots, the LAN interface was explicitly pinned to a Static IPv4 configuration in <code class="inline-code">config.xml</code>, and downstream networking equipment was factory-reset to force clean IP allocations from the updated Kea DHCP pool.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
 	<!-- CNT 3004 Course Section -->
-	<section id="cnt3004" class="section">
+	<section id="cnt3004" class="section bg-alt">
 		<div class="container">
 			<h2 class="section-title">CNT 3004 - Computer Network Concepts</h2>
 			<p class="section-desc">Course reflections, lab exercises, and practical networking key concepts.</p>
@@ -203,7 +272,7 @@
 	</section>
 
 	<!-- Goals & Certifications Section -->
-	<section id="goals" class="section bg-alt">
+	<section id="goals" class="section">
 		<div class="container">
 			<h2 class="section-title">Professional Goals & Certifications</h2>
 			<div class="grid-2">
@@ -227,7 +296,7 @@
 	</section>
 
 	<!-- Resume Section -->
-	<section id="resume" class="section">
+	<section id="resume" class="section bg-alt">
 		<div class="container">
 			<h2 class="section-title">Technical Qualifications & Resume</h2>
 			<div class="card">
@@ -235,19 +304,18 @@
 				<div class="skills-grid">
 					<div class="skill-category">
 						<h4>Networking & Security</h4>
-						<p>OPNsense, Stateful Firewalls, Kea DHCP, DNS, VLANs, Tailscale Mesh VPN, Wireshark Packet Analysis</p>
+						<p>OPNsense, Stateful Firewalls, Kea DHCP, DNS-01, VLANs, Tailscale Mesh VPN, Hyperscan IDS</p>
 					</div>
 					<div class="skill-category">
 						<h4>Systems & Virtualization</h4>
-						<p>Proxmox VE, Debian, Arch Linux / EndeavourOS, Windows 11, Docker, LXC Containers, ZFS Storage</p>
+						<p>Proxmox VE, Debian, Arch Linux, Reverse Proxies (Caddy), Docker, LXC Containers, ZFS Storage</p>
 					</div>
 					<div class="skill-category">
 						<h4>Hardware & Infrastructure</h4>
-						<p>20U Server Rack Assembly, Patch Panel Cable Routing, Managed 2.5G Switches, UPS Battery Backups</p>
+						<p>20U Server Rack Assembly, Patch Panel Cable Routing, Managed 2.5G Switches, UPS Backup Power</p>
 					</div>
 				</div>
 				<div class="resume-download-wrapper">
-					<!-- Link PDF resume file in root directory-->
 					<a href="resume.pdf" target="_blank" class="btn btn-primary">Download Official Resume (PDF)</a>
 				</div>
 			</div>
