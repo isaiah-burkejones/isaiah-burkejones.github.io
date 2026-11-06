@@ -486,6 +486,11 @@ td {
 	border-top: 1px solid var(--border-color);
 }
 
+.incident-body ul,
+.incident-body ol {
+    color: var(--text-primary);
+}
+
 /* Service Status */
 .status {
 	display: inline-block;
