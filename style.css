@@ -536,9 +536,7 @@ td {
 	.main-nav a {
 		font-size: 0.85rem;
 	}
-}
 
-@media (max-width: 768px) {
 	.tab-btn {
 		font-size: 0.85rem;
 		padding: 0.65rem 0.85rem;
