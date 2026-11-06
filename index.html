@@ -423,9 +423,8 @@
 						<h3>Nextcloud</h3>
 						<p class="card-sub">LXC 100 | Docker Compose | 4 vCPU | 12GB RAM</p>
 						<ul>
+							<li><strong>Cloud hosting:</strong> self-hosted cloud solution to store, sync, and collaborate on files, secure video meetings/text messages, and automate tasks.</li>
 							<li><strong>Stack:</strong> Nextcloud with MariaDB and Redis, using External Storage to serve the ZFS mirror dataset directly.</li>
-							<li><strong>Migration:</strong> replaced the original SMB share on the same container, address, and dataset, so existing files carried over.</li>
-							<li><strong>HTTPS:</strong> certificates issued by the internal CA.</li>
 							<li><strong>Status:</strong> <span class="status">Running</span></li>
 						</ul>
 					</div>
@@ -436,7 +435,6 @@
 						<ul>
 							<li><strong>Git Hosting:</strong> self-hosted Git repositories and wiki.</li>
 							<li><strong>Storage:</strong> data lives on the ZFS mirror alongside Nextcloud, inside an unprivileged container.</li>
-							<li><strong>HTTPS:</strong> certificates issued by the internal CA.</li>
 							<li><strong>Status:</strong> <span class="status">Running</span></li>
 						</ul>
 					</div>
@@ -445,6 +443,7 @@
 						<h3>Wazuh SIEM</h3>
 						<p class="card-sub">VM 104 | KVM | 2 vCPU | 16GB RAM | 64GB Disk</p>
 						<ul>
+							<li><strong>Capabilities:</strong> collects, analyzes, and monitors security events across the network.</li>
 							<li><strong>Why a VM:</strong> the indexer needs kernel tuning that unprivileged containers cannot provide.</li>
 							<li><strong>Coverage:</strong> agents on the firewall (ingesting Suricata alerts), hypervisor, and containers.</li>
 							<li><strong>Status:</strong> <span class="status">Running</span></li>
