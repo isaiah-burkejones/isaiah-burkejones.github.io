@@ -4,11 +4,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Isaiah Burke Jones | e-Portfolio</title>
-	<link rel="stylesheet" href="style.css?v=3">
+	<link rel="stylesheet" href="style.css?v=4">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-</head>
 <body>
 
 	<!-- Navigation Header -->
@@ -43,6 +42,7 @@
 				</p>
 				<div class="hero-cta">
 					<a href="#homelab" class="btn btn-primary">View Homelab Architecture</a>
+					<a href="#cnt3004" class="btn btn-secondary">CNT 3004 Portfolio</a>
 					<a href="#resume" class="btn btn-secondary">Qualifications</a>
 				</div>
 			</div>
@@ -89,6 +89,33 @@
 
 			<!-- Tab: Overview -->
 			<div class="tab-panel active" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
+				<!-- Human-Readable Narrative Overview for Broad Stakeholders -->
+				<div class="narrative-card">
+					<div class="card-tag">Plain-English Overview</div>
+					<h3>What Is This Homelab and Why Was It Built?</h3>
+					<p class="narrative-lead">
+						Most home networks put every computer, phone, and smart device on one shared network where anything can talk to anything else, meaning a single compromised device can expose everything on the LAN. Instead of keeping my devices in one shared space, I built this 20U server rack to separate my systems into isolated network zones and practice running a zero-trust network in the real world. It gives me a live environment to make actual hardware and software choices, manage daily system updates, and troubleshoot infrastructure problems firsthand. Along the way, it also lets me host my own private services, including a Vaultwarden password vault, Gitea code repositories, and Nextcloud as a full cloud workspace for files, meetings, messaging, and task automation.
+					</p>
+					<div class="analogy-grid">
+						<div class="analogy-item">
+							<h4>Perimeter Firewall (OPNsense)</h4>
+							<p>Every connection entering or leaving the rack goes through a dedicated firewall appliance. It blocks unauthorized traffic between network zones by default and watches for suspicious packets.</p>
+						</div>
+						<div class="analogy-item">
+							<h4>Isolated Network Zones (VLANs)</h4>
+							<p>Wireless devices, desktop computers, and backend servers are split into separate virtual networks. A phone on Wi-Fi cannot directly reach or scan the servers holding my data.</p>
+						</div>
+						<div class="analogy-item">
+							<h4>Virtual Servers &amp; Storage (Proxmox &amp; ZFS)</h4>
+							<p>A single tower server runs isolated containers and virtual machines for each service. Important files and repositories sit on a mirrored pair of 4TB hard drives so the data survives a drive failure.</p>
+						</div>
+						<div class="analogy-item">
+							<h4>Central Security Monitoring (Wazuh SIEM)</h4>
+							<p>A dedicated virtual machine collects logs from the firewall and every server on the rack so I can audit system health, track login activity, and catch configuration errors early.</p>
+						</div>
+					</div>
+				</div>
+
 				<div class="stat-grid">
 					<div class="card stat"><div class="stat-value">5</div><div class="stat-label">Network Segments</div></div>
 					<div class="card stat"><div class="stat-value">5</div><div class="stat-label">Virtual Guests</div><div class="stat-label">(4 LXC + 1 VM)</div></div>
@@ -135,7 +162,7 @@
 				</div>
 
 				<div class="card">
-					<h3>Traffic Path</h3>
+					<h3>Physical & Logical Traffic Path</h3>
 					<div class="flow">
 						<span>Upstream Feed</span><span class="arrow">&rarr;</span>
 						<span>Patch Panel</span><span class="arrow">&rarr;</span>
@@ -465,7 +492,7 @@
 						<p class="card-sub">LXC 102 | 1 vCPU | 2GB RAM</p>
 						<ul>
 							<li><strong>TLS Termination:</strong> serves certificates from the internal CA, so no public CA or public DNS records are involved.</li>
-							<li><strong>Segmentation:</strong> the only host allowed to reach the vault backend.</li>
+							<li><strong>Segmentation:</strong> the only host allowed to reach the vault backend and Wazuh dashboard.</li>
 							<li><strong>Status:</strong> <span class="status">Running</span></li>
 						</ul>
 					</div>
@@ -541,19 +568,250 @@
 	<section id="cnt3004" class="section">
 		<div class="container">
 			<h2 class="section-title">CNT 3004 - Computer Network Concepts</h2>
-			<p class="section-desc">Course reflections, lab exercises, and practical networking key concepts.</p>
+			<p class="section-desc">
+				Semester reflections covering all five lab assignments, Wireshark packet captures, quizzes, discussions, and course takeaways. Click any assignment card below to expand its notes.
+			</p>
 
-			<div class="card">
-				<h3>Course Reflections & Core Takeaways</h3>
-				<p>
-					CNT 3004 provides a comprehensive framework for understanding modern data communications, the OSI and TCP/IP reference models, subnetting, network packet flow, and security protocols.
-				</p>
+			<!-- Assignment 1 Reflection -->
+			<details class="card border-top incident" open>
+				<summary>
+					<div>
+						<div class="card-tag">Assignment 1 | Chapters 1 &amp; 2</div>
+						<h3>Homework 1 - Networking Fundamentals, Cabling &amp; CLI Diagnostics</h3>
+						<p class="card-sub">OSI &amp; TCP/IP Models | Enterprise Cabling | Ping, Traceroute &amp; Wireshark Intro</p>
+					</div>
+				</summary>
+				<div class="incident-body">
+					<div class="reflection-grid">
+						<div class="reflection-item">
+							<h4>Experience Completing the Lab</h4>
+							<ul>
+								<li>Mapped common protocols across the OSI and TCP/IP layers and traced enterprise wiring from wall outlets through patch panels, IDFs, and the MDF to the ISP demarcation point.</li>
+								<li>Built a topology diagram of my apartment network and inspected live HTTP request and response headers using browser developer tools.</li>
+								<li>Ran ping, traceroute, and host configuration audits from the command line before recording my first live packet capture in Wireshark.</li>
+							</ul>
+						</div>
+						<div class="reflection-item">
+							<h4>Key Skills &amp; Concepts Learned</h4>
+							<ul>
+								<li>Comparing protocol data units and address sizes across MAC addresses, IPv4, IPv6, and transport ports.</li>
+								<li>Using ipconfig, getmac, ping, and tracert to test local loopback health, gateway reachability, and multi-hop WAN latency.</li>
+								<li>Navigating the Packet List, Packet Details, and Packet Bytes panes in Wireshark to inspect encapsulated frames.</li>
+							</ul>
+						</div>
+						<div class="reflection-item">
+							<h4>Challenges Faced</h4>
+							<ul>
+								<li>Filtering out virtual network adapters from Hyper-V, VirtualBox, and VPN tunnels to locate the active physical network interface during command-line audits.</li>
+								<li>Understanding why certain intermediate routers along a traceroute path drop ICMP echo requests and return timeouts even when the final destination is reachable.</li>
+							</ul>
+						</div>
+					</div>
+					<div class="reflection-takeaway">
+						<h4>Overall Takeaway &amp; What I Learned</h4>
+						<p>This lab built my core diagnostic workflow by connecting physical cabling and layered encapsulation directly to command-line tools and packet inspection.</p>
+					</div>
+				</div>
+			</details>
 
-				<div class="reflection-box">
-					<h4>Course Reflections Placeholder</h4>
-					<p>
-						<em>As assignments and Wireshark packet captures are completed throughout the semester, reflections detailing key skills, challenges faced, and overall takeaways will be published here.</em>
-					</p>
+			<!-- Assignment 2 Reflection -->
+			<details class="card border-top incident">
+				<summary>
+					<div>
+						<div class="card-tag">Assignment 2 | Chapters 3 &amp; 4</div>
+						<h3>Homework 2 - Transport &amp; Network Layer Protocols (HTTP, TCP, UDP, DNS)</h3>
+						<p class="card-sub">IPv4 &amp; IPv6 Addressing | ARP &amp; Routing Tables | Wireshark Handshake &amp; DNS Analysis</p>
+					</div>
+				</summary>
+				<div class="incident-body">
+					<div class="reflection-grid">
+						<div class="reflection-item">
+							<h4>Experience Completing the Lab</h4>
+							<ul>
+								<li>Audited local ARP caches, interface traffic counters, and host routing tables using netstat, arp, route print, and IPv6 ping tools.</li>
+								<li>Captured live traffic in Wireshark to compare connection-oriented TCP handshakes against connectionless UDP transfers.</li>
+								<li>Inspected DNS A-record queries and responses against public resolvers to see how domain names resolve to IP addresses before an HTTP connection begins.</li>
+							</ul>
+						</div>
+						<div class="reflection-item">
+							<h4>Key Skills &amp; Concepts Learned</h4>
+							<ul>
+								<li>Following a complete TCP three-way handshake by tracking SYN, SYN-ACK, and ACK flags along with sequence and acknowledgment numbers.</li>
+								<li>Contrasting TCP session overhead with lightweight two-packet UDP query and response exchanges used by DNS.</li>
+								<li>Evaluating IPv4 address classes, private subnet ranges, APIPA link-local fallback behavior, and DNS Time-to-Live caching tradeoffs.</li>
+							</ul>
+						</div>
+						<div class="reflection-item">
+							<h4>Challenges Faced</h4>
+							<ul>
+								<li>Preventing modern web browsers from automatically upgrading test connections to HTTPS when trying to inspect unencrypted HTTP headers.</li>
+								<li>Isolating a single TCP conversation among dozens of background browser sockets by filtering on specific client ephemeral ports.</li>
+							</ul>
+						</div>
+					</div>
+					<div class="reflection-takeaway">
+						<h4>Overall Takeaway &amp; What I Learned</h4>
+						<p>Seeing TCP sequence numbers, ARP hardware mappings, and DNS lookups inside live packets made transport and network layer routing tangible.</p>
+					</div>
+				</div>
+			</details>
+
+			<!-- Assignment 3 Reflection -->
+			<details class="card border-top incident">
+				<summary>
+					<div>
+						<div class="card-tag">Assignment 3 | Chapters 5 &amp; 6</div>
+						<h3>Homework 3 - Transmission Media, Wireless Spectrum &amp; 802.11 Frame Overhead</h3>
+						<p class="card-sub">Copper &amp; Fiber Standards | Multiplexing | Wireshark Throughput Graphing &amp; Wi-Fi Frames</p>
+					</div>
+				</summary>
+				<div class="incident-body">
+					<div class="reflection-grid">
+						<div class="reflection-item">
+							<h4>Experience Completing the Lab</h4>
+							<ul>
+								<li>Compared coaxial, twisted-pair copper, and single-mode versus multimode fiber-optic cabling standards alongside signal loss and crosstalk factors.</li>
+								<li>Captured a multi-gigabyte Linux ISO download over my 2.5 Gbps Ethernet connection and graphed live throughput and link utilization in Wireshark.</li>
+								<li>Analyzed an 802.11 wireless packet capture to measure the ratio of management and control frames to actual user data frames.</li>
+							</ul>
+						</div>
+						<div class="reflection-item">
+							<h4>Key Skills &amp; Concepts Learned</h4>
+							<ul>
+								<li>Measuring real-world application throughput versus theoretical link speed using Wireshark I/O graphs.</li>
+								<li>Breaking down 802.11 wireless traffic into Management, Control, and Data frames to quantify how much airtime goes to collision avoidance and beacon broadcasts.</li>
+								<li>Selecting appropriate wired and wireless media based on distance, interference resistance, duplex capabilities, and WPA2 or WPA3 security needs.</li>
+							</ul>
+						</div>
+						<div class="reflection-item">
+							<h4>Challenges Faced</h4>
+							<ul>
+								<li>Accounting for malformed capture headers when the sum of Management, Control, and Data frames did not match the total packet count in the wireless trace.</li>
+								<li>Distinguishing between local link capacity and upstream server rate limiting when analyzing why a 2.5 Gbps connection averaged around 410 Mbps during a file download.</li>
+							</ul>
+						</div>
+					</div>
+					<div class="reflection-takeaway">
+						<h4>Overall Takeaway &amp; What I Learned</h4>
+						<p>This assignment showed why advertised bandwidth never equals real throughput, especially on wireless networks where management and control frames consume the majority of airtime.</p>
+					</div>
+				</div>
+			</details>
+
+			<!-- Assignment 4 Reflection -->
+			<details class="card border-top incident">
+				<summary>
+					<div>
+						<div class="card-tag">Assignment 4 | Chapters 7 &amp; 8</div>
+						<h3>Homework 4 - Virtualization, CIDR Subnetting, VLAN Trunking &amp; Deep HTTP</h3>
+						<p class="card-sub">Hypervisors &amp; Cloud Models | CIDR &amp; VLSM Math | 802.1Q VLANs | Wireshark HTTP Caching &amp; Auth</p>
+					</div>
+				</summary>
+				<div class="incident-body">
+					<div class="reflection-grid">
+						<div class="reflection-item">
+							<h4>Experience Completing the Lab</h4>
+							<ul>
+								<li>Evaluated Type 1 and Type 2 hypervisors, virtual NIC bridging modes, cloud service tiers, and encrypted remote management over SSH and VPNs.</li>
+								<li>Calculated CIDR subnet masks and host ranges to divide a /24 network into smaller /26 segments and designed a multi-switch 802.1Q VLAN trunk topology.</li>
+								<li>Deployed an Ubuntu Linux virtual machine and captured five Wireshark HTTP scenarios covering caching headers, TCP payload reassembly, and basic authentication.</li>
+							</ul>
+						</div>
+						<div class="reflection-item">
+							<h4>Key Skills &amp; Concepts Learned</h4>
+							<ul>
+								<li>Performing binary subnetting math to determine network IDs, broadcast addresses, and usable host ranges across variable prefix lengths.</li>
+								<li>Tracing how large HTTP responses split across multiple TCP segments and reassemble at the application layer, and how browsers validate cached content with conditional GET headers.</li>
+								<li>Identifying the security risks of sending HTTP Basic Authentication credentials without TLS encryption.</li>
+							</ul>
+						</div>
+						<div class="reflection-item">
+							<h4>Challenges Faced</h4>
+							<ul>
+								<li>Diagnosing intentional VLAN permission mismatches across trunk ports in a multi-switch topology diagram to explain why specific hosts could not communicate.</li>
+								<li>Correlating fragmented TCP data frames with the final reassembled HTTP response inside Wireshark.</li>
+							</ul>
+						</div>
+					</div>
+					<div class="reflection-takeaway">
+						<h4>Overall Takeaway &amp; What I Learned</h4>
+						<p>Homework 4 tied directly into my homelab work by reinforcing CIDR subnetting, 802.1Q trunking, and why internal web services must always sit behind HTTPS.</p>
+					</div>
+				</div>
+			</details>
+
+			<!-- Assignment 5 Reflection -->
+			<details class="card border-top incident">
+				<summary>
+					<div>
+						<div class="card-tag">Assignment 5 | Chapters 9 - 12</div>
+						<h3>Homework 5 &amp; 6 - Network Security, WAN Technologies, System Admin &amp; TCP Fault Recovery</h3>
+						<p class="card-sub">NGFW, DMZ &amp; STP | MPLS vs. Site-to-Site VPN | Windows MMC | Wireshark TCP Retransmissions</p>
+					</div>
+				</summary>
+				<div class="incident-body">
+					<div class="reflection-grid">
+						<div class="reflection-item">
+							<h4>Experience Completing the Lab</h4>
+							<ul>
+								<li>Reviewed security certifications, enterprise risk management platforms, organizational security policies, and layered defenses including Next-Generation Firewalls, DMZs, and switch port security.</li>
+								<li>Compared enterprise WAN link technologies such as MPLS, SONET, and Frame Relay against encrypted Site-to-Site VPNs over public fiber internet for connecting regional offices.</li>
+								<li>Configured a custom Windows Management Console with Device Manager, Event Viewer, and Services snap-ins, then used Wireshark to analyze TCP packet loss, duplicate ACKs, and retransmissions during large file downloads.</li>
+							</ul>
+						</div>
+						<div class="reflection-item">
+							<h4>Key Skills &amp; Concepts Learned</h4>
+							<ul>
+								<li>Using Wireshark Expert Information and TCP stream filters to measure retransmission rates and distinguish fast retransmissions from timeout-driven recovery.</li>
+								<li>Evaluating network redundancy alongside Spanning Tree Protocol to prevent Layer 2 switching loops and broadcast storms.</li>
+								<li>Applying least-privilege access controls, patch management, and centralized event log monitoring to harden systems against reconnaissance and phishing.</li>
+							</ul>
+						</div>
+						<div class="reflection-item">
+							<h4>Challenges Faced</h4>
+							<ul>
+								<li>Understanding why the TCP retransmission rate was higher on the isolated high-speed download stream than across the entire capture, which included low-bandwidth background traffic.</li>
+								<li>Tracing how rapid TCP throughput spikes can exhaust a local modem buffer and trigger dropped packets while the browser download completes without visible errors.</li>
+							</ul>
+						</div>
+					</div>
+					<div class="reflection-takeaway">
+						<h4>Overall Takeaway &amp; What I Learned</h4>
+						<p>Analyzing live packet loss and TCP fault recovery alongside firewall architecture and system administration tied together how resilient networks stay reliable and secure under stress.</p>
+					</div>
+				</div>
+			</details>
+
+			<!-- General Reflection on Quizzes & Discussions + Overall Course Reflection -->
+			<div class="grid-2">
+				<div class="card border-top">
+					<div class="card-tag">Course Engagement</div>
+					<h3>Quizzes &amp; Discussions Reflection</h3>
+					<ul>
+						<li><strong>Weekly Quizzes:</strong> Reinforced protocol port numbers, OSI and TCP/IP layer encapsulation, wireless 802.11 standards, multiplexing methods, and fast CIDR subnetting math.</li>
+						<li><strong>Peer Discussions:</strong> Explored practical networking concepts such as Internet of Things security, edge computing, blockchain, and dynamic deception technology.</li>
+					</ul>
+					<div class="reflection-box">
+						<h4>Key Takeaway</h4>
+						<p>
+							Discussing real network design scenarios with classmates helped me explain technical concepts clearly and connect textbook theory directly to the packet captures we ran in lab.
+						</p>
+					</div>
+				</div>
+
+				<div class="card border-top">
+					<div class="card-tag">Semester Synthesis</div>
+					<h3>Overall Course Reflection &amp; Career Impact</h3>
+					<ul>
+						<li><strong>Skill Progression:</strong> Grew from basic physical cabling and command-line tools to calculating multi-subnet CIDR layouts, troubleshooting 802.1Q VLAN trunks, and diagnosing TCP packet loss in Wireshark.</li>
+						<li><strong>Direct Homelab Application:</strong> Applied course concepts directly to my 20U server rack when splitting my network into isolated VLANs on OPNsense, implementing security analysis and monitoring tools, and setting up an internal Certificate Authority.</li>
+					</ul>
+					<div class="reflection-box">
+						<h4>Career Readiness</h4>
+						<p>
+							The packet analysis and troubleshooting habits I built in CNT 3004 give me a strong foundation as I prepare for CompTIA Network+, Security+, CCNA, and roles in systems and network administration.
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -562,22 +820,50 @@
 	<!-- Goals & Certifications Section -->
 	<section id="goals" class="section bg-alt">
 		<div class="container">
-			<h2 class="section-title">Professional Goals & Certifications</h2>
+			<h2 class="section-title">Professional Goals, Certifications &amp; Activities</h2>
 			<div class="grid-2">
 				<div class="card">
 					<h3>Career Objectives</h3>
 					<p>
-						Following graduation from UCF with my B.S. in Information Technology, my goal is to start a career in Systems Administration or Network Engineering. I aim to focus on enterprise network design, Linux infrastructure management, and operational administration.
+						Following graduation from the University of Central Florida (UCF) with my B.S. in Information Technology, my goal is to build a career in <strong>Network Engineering</strong> and <strong>Systems Administration and Security</strong>.
+					</p>
+					<p style="margin-top: 0.75rem; color: var(--text-secondary);">
+						I am particularly interested in roles where I can architect Zero-Trust network topologies, manage Linux hypervisors and containerized workloads, harden perimeter firewalls, and operate SIEM/IDS telemetry platforms (such as Wazuh and Suricata) to detect and mitigate threats before lateral movement can occur.
 					</p>
 				</div>
 				<div class="card">
 					<h3>Certification Roadmap</h3>
 					<ul class="cert-list">
-						<li><strong>CompTIA Network+</strong> - In Progress</li>
-						<li><strong>CompTIA Security+</strong> - Preparing</li>
-						<li><strong>CompTIA Linux+</strong> - Preparing</li>
-						<li><strong>CCNA</strong> - Preparing</li>
+						<li><strong>CompTIA Network+</strong> &ndash; In Progress<br>(Core routing, switching, 802.1Q VLANs, &amp; troubleshooting)</li>
+						<li><strong>CompTIA Security+</strong> &ndash; Preparing<br>(Zero-Trust architecture, PKI, SIEM, &amp; threat mitigation)</li>
+						<li><strong>CompTIA Linux+</strong> &ndash; Preparing<br>(Debian/Ubuntu administration, systemd, ZFS, &amp; containerization)</li>
+						<li><strong>Cisco CCNA</strong> &ndash; Preparing<br>(Enterprise routing protocols, VLAN trunking, &amp; ACL security)</li>
 					</ul>
+				</div>
+			</div>
+
+			<div class="card border-top">
+				<div class="card-tag">Applied Projects &amp; Extracurricular Activities</div>
+				<h3>Cybersecurity &amp; Technology Initiatives</h3>
+				<div class="grid-3" style="margin-top: 1rem;">
+					<div>
+						<h4>Enterprise 20U Homelab &amp; Sealnet SOC</h4>
+						<p style="color: var(--text-secondary); font-size: 0.92rem;">
+							Designed and assembled a physical 20U rack featuring an OPNsense edge firewall, 802.1Q VLAN segmentation across five zones, Suricata IPS, a Proxmox VE hypervisor with ZFS mirrored storage, and a Wazuh SIEM VM monitoring every node.
+						</p>
+					</div>
+					<div>
+						<h4>Private PKI &amp; Enforced DNS Architecture</h4>
+						<p style="color: var(--text-secondary); font-size: 0.92rem;">
+							Built an internal Root Certificate Authority on OPNsense to issue private TLS certificates for local services without exposing internal hostnames to public logs, paired with Unbound DNS-over-TLS and firewall redirect rules that block unencrypted DNS bypasses.
+						</p>
+					</div>
+					<div>
+						<h4>Self-Hosted Cloud &amp; Zero-Trust Mesh</h4>
+						<p style="color: var(--text-secondary); font-size: 0.92rem;">
+							Deployed Dockerized Nextcloud, Gitea, Vaultwarden, and Caddy behind a reverse proxy and a Tailscale mesh VPN enforced with cryptographic Tailnet Lock signing nodes.
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -586,21 +872,21 @@
 	<!-- Resume Section -->
 	<section id="resume" class="section">
 		<div class="container">
-			<h2 class="section-title">Technical Qualifications & Resume</h2>
+			<h2 class="section-title">Technical Qualifications &amp; Resume</h2>
 			<div class="card">
 				<h3>Technical Core Competencies</h3>
 				<div class="skills-grid">
 					<div class="skill-category">
-						<h4>Networking & Security</h4>
-						<p>OPNsense, Stateful Firewalls, VLANs (802.1Q), Kea DHCP, Unbound DNS, Suricata IPS, Wazuh SIEM, Tailscale Mesh VPN, Wireshark Packet Analysis</p>
+						<h4>Networking &amp; Security</h4>
+						<p>OPNsense, Stateful Firewalls, VLANs (802.1Q), CIDR/VLSM Subnetting, Kea DHCP, Unbound DNS (DoT/DNSBL), Internal PKI / Root CA, Suricata IPS, Wazuh SIEM, Tailscale Mesh VPN (Tailnet Lock), Wireshark Packet Analysis</p>
 					</div>
 					<div class="skill-category">
-						<h4>Systems & Virtualization</h4>
-						<p>Proxmox VE, Debian, Arch Linux / EndeavourOS, Windows 11, Docker, LXC Containers, ZFS Storage, Samba, Nextcloud, Gitea, Caddy, Vaultwarden</p>
+						<h4>Systems &amp; Virtualization</h4>
+						<p>Proxmox VE (KVM &amp; LXC), Debian / Ubuntu Server, Arch Linux / EndeavourOS, Windows 11, Docker Compose, ZFS Mirrored Storage, Samba SMB, Nextcloud, Gitea, Caddy Reverse Proxy, Vaultwarden</p>
 					</div>
 					<div class="skill-category">
-						<h4>Hardware & Infrastructure</h4>
-						<p>20U Server Rack Assembly, Patch Panel Cable Routing, Managed 2.5G Switches, UPS Battery Backups</p>
+						<h4>Hardware &amp; Infrastructure</h4>
+						<p>20U Server Rack Assembly, Cat 6A Patch Panel Termination &amp; Cable Routing, Managed 2.5G Switches, Wi-Fi 7 Access Point Deployment, Eaton 1500VA UPS Battery Backups</p>
 					</div>
 				</div>
 				<div class="resume-download-wrapper">
