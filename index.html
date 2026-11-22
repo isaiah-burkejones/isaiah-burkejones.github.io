@@ -94,7 +94,7 @@
 					<div class="card-tag">Plain-English Overview</div>
 					<h3>What Is This Homelab and Why Was It Built?</h3>
 					<p class="narrative-lead">
-						Most home networks put every computer, phone, and smart device on one shared network where anything can talk to anything else, meaning a single compromised device can expose everything on the LAN. Instead of keeping my devices in one shared space, I built this 20U server rack to separate my systems into isolated network zones and practice running a zero-trust network in the real world. It gives me a live environment to make actual hardware and software choices, manage daily system updates, and troubleshoot infrastructure problems firsthand. Along the way, it also lets me host my own private services, including a Vaultwarden password vault, Gitea code repositories, and Nextcloud as a full cloud workspace for files, meetings, messaging, and task automation.
+						Instead of keeping my devices connected on one shared network, I built this 20U server rack to separate my systems into isolated network zones and practice running a zero-trust network in the real world. It gives me a live environment to make actual hardware and software choices, manage and maintain systems on a daily basis, and troubleshoot network issues firsthand. Additionally, it lets me host my own private services, including a Vaultwarden encrypted password vault, Gitea code repositories, and Nextcloud as a full cloud workspace for files, meetings, messaging, and task automation.
 					</p>
 					<div class="analogy-grid">
 						<div class="analogy-item">
@@ -107,7 +107,7 @@
 						</div>
 						<div class="analogy-item">
 							<h4>Virtual Servers &amp; Storage (Proxmox &amp; ZFS)</h4>
-							<p>A single tower server runs isolated containers and virtual machines for each service. Important files and repositories sit on a mirrored pair of 4TB hard drives so the data survives a drive failure.</p>
+							<p>A single tower server runs isolated containers and virtual machines for each service. Important files and repositories sit on a mirrored pair of encrypted 4TB hard drives so the data survives a drive failure.</p>
 						</div>
 						<div class="analogy-item">
 							<h4>Central Security Monitoring (Wazuh SIEM)</h4>
@@ -154,7 +154,7 @@
 						<h3>ZFS Mirror Pool</h3>
 						<p class="card-sub">2x 4TB WD Red Plus | ZFS Mirror | 2TB Backup Disk</p>
 						<ul>
-							<li><strong>Resilience:</strong> Mirrored pool tolerates a single drive failure.</li>
+							<li><strong>Redundancy:</strong> Mirrored pool tolerates a single drive failure.</li>
 							<li><strong>Shared Datasets:</strong> Backs Nextcloud and Gitea data, passed through to an unprivileged container.</li>
 							<li><strong>Backups:</strong> Separate 2TB disk reserved for emergency backups.</li>
 						</ul>
@@ -162,7 +162,7 @@
 				</div>
 
 				<div class="card">
-					<h3>Physical & Logical Traffic Path</h3>
+					<h3>Traffic Path</h3>
 					<div class="flow">
 						<span>Upstream Feed</span><span class="arrow">&rarr;</span>
 						<span>Patch Panel</span><span class="arrow">&rarr;</span>
@@ -609,7 +609,7 @@
 					</div>
 					<div class="reflection-takeaway">
 						<h4>Overall Takeaway &amp; What I Learned</h4>
-						<p>This lab built my core diagnostic workflow by connecting physical cabling and layered encapsulation directly to command-line tools and packet inspection.</p>
+						<p>This lab built upon my diagnostic workflow by connecting physical cabling and layered encapsulation to command-line tools and packet inspection.</p>
 					</div>
 				</div>
 			</details>
@@ -651,7 +651,7 @@
 					</div>
 					<div class="reflection-takeaway">
 						<h4>Overall Takeaway &amp; What I Learned</h4>
-						<p>Seeing TCP sequence numbers, ARP hardware mappings, and DNS lookups inside live packets made transport and network layer routing tangible.</p>
+						<p>Seeing TCP sequence numbers, ARP hardware mappings, and DNS lookups inside live packets expanded on my knowledge of transport and network layer routing.</p>
 					</div>
 				</div>
 			</details>
@@ -693,7 +693,7 @@
 					</div>
 					<div class="reflection-takeaway">
 						<h4>Overall Takeaway &amp; What I Learned</h4>
-						<p>This assignment showed why advertised bandwidth never equals real throughput, especially on wireless networks where management and control frames consume the majority of airtime.</p>
+						<p>This assignment showed why advertised bandwidth never equals real throughput, especially on wireless networks where packet volume is mostly comprised of management and control frames.</p>
 					</div>
 				</div>
 			</details>
@@ -777,7 +777,7 @@
 					</div>
 					<div class="reflection-takeaway">
 						<h4>Overall Takeaway &amp; What I Learned</h4>
-						<p>Analyzing live packet loss and TCP fault recovery alongside firewall architecture and system administration tied together how resilient networks stay reliable and secure under stress.</p>
+						<p>Analyzing live packet loss, TCP fault recovery, firewall architecture, and system administration demonstrated how resilient networks stay reliable and secure under stress.</p>
 					</div>
 				</div>
 			</details>
@@ -794,13 +794,13 @@
 					<div class="reflection-box">
 						<h4>Key Takeaway</h4>
 						<p>
-							Discussing real network design scenarios with classmates helped me explain technical concepts clearly and connect textbook theory directly to the packet captures we ran in lab.
+							Discussing real network design scenarios with classmates helped me explain technical concepts clearly and connect textbook theory to the packet captures we ran in lab.
 						</p>
 					</div>
 				</div>
 
 				<div class="card border-top">
-					<div class="card-tag">Semester Synthesis</div>
+					<div class="card-tag">Semester Summary</div>
 					<h3>Overall Course Reflection &amp; Career Impact</h3>
 					<ul>
 						<li><strong>Skill Progression:</strong> Grew from basic physical cabling and command-line tools to calculating multi-subnet CIDR layouts, troubleshooting 802.1Q VLAN trunks, and diagnosing TCP packet loss in Wireshark.</li>
@@ -834,10 +834,10 @@
 				<div class="card">
 					<h3>Certification Roadmap</h3>
 					<ul class="cert-list">
-						<li><strong>CompTIA Network+</strong> &ndash; In Progress<br>(Core routing, switching, 802.1Q VLANs, &amp; troubleshooting)</li>
-						<li><strong>CompTIA Security+</strong> &ndash; Preparing<br>(Zero-Trust architecture, PKI, SIEM, &amp; threat mitigation)</li>
-						<li><strong>CompTIA Linux+</strong> &ndash; Preparing<br>(Debian/Ubuntu administration, systemd, ZFS, &amp; containerization)</li>
-						<li><strong>Cisco CCNA</strong> &ndash; Preparing<br>(Enterprise routing protocols, VLAN trunking, &amp; ACL security)</li>
+						<li><strong>CompTIA Network+</strong> &ndash; In Progress</li>
+						<li><strong>CompTIA Security+</strong> &ndash; Preparing</li>
+						<li><strong>CompTIA Linux+</strong> &ndash; Preparing</li>
+						<li><strong>Cisco CCNA</strong> &ndash; Preparing</li>
 					</ul>
 				</div>
 			</div>
@@ -847,7 +847,7 @@
 				<h3>Cybersecurity &amp; Technology Initiatives</h3>
 				<div class="grid-3" style="margin-top: 1rem;">
 					<div>
-						<h4>Enterprise 20U Homelab &amp; Sealnet SOC</h4>
+						<h4>20U Enterprise Network &amp; SOC</h4>
 						<p style="color: var(--text-secondary); font-size: 0.92rem;">
 							Designed and assembled a physical 20U rack featuring an OPNsense edge firewall, 802.1Q VLAN segmentation across five zones, Suricata IPS, a Proxmox VE hypervisor with ZFS mirrored storage, and a Wazuh SIEM VM monitoring every node.
 						</p>
@@ -855,7 +855,7 @@
 					<div>
 						<h4>Private PKI &amp; Enforced DNS Architecture</h4>
 						<p style="color: var(--text-secondary); font-size: 0.92rem;">
-							Built an internal Root Certificate Authority on OPNsense to issue private TLS certificates for local services without exposing internal hostnames to public logs, paired with Unbound DNS-over-TLS and firewall redirect rules that block unencrypted DNS bypasses.
+							Built an internal Root Certificate Authority on OPNsense to issue private TLS certificates for local services without exposing internal hostnames to public logs, paired with Unbound DNS-over-TLS, unencrypted DNS catches &amp; redirects, and DoT/DoH/DoQ block lists.
 						</p>
 					</div>
 					<div>
